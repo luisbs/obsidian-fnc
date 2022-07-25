@@ -1,0 +1,60 @@
+{
+  "private": true,
+  "license": "MIT",
+  "version": "0.1.0",
+  "name": "obsidian-fnc",
+  "description": "Common obsidian utility functions",
+  "keywords": [
+    "obsidian",
+    "utility"
+  ],
+  "author": {
+    "name": "luisbs",
+    "url": "https://github.com/luisbs"
+  },
+  "main": "lib/index.js",
+  "types": "lib/types.d.ts",
+  "scripts": {
+    "prepare": "npx simple-git-hooks",
+    "build": "npx lint && node esbuild.config.mjs",
+    "lint": "npx lint:ts && npx lint:eslint && npx lint:prettier",
+    "lint:ts": "tsc -noEmit -skipLibCheck",
+    "lint:prettier": "prettier --check \"./src/**/*.(js|ts)\"",
+    "lint:prettier:fix": "prettier --write \"./src/**/*.(js|ts)\"",
+    "lint:eslint": "eslint --ext .js,.ts ./src",
+    "lint:eslint:fix": "eslint --fix --ext .js,.ts ./src"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@types/node": "18.6.0",
+    "@typescript-eslint/eslint-plugin": "5.30.7",
+    "@typescript-eslint/parser": "5.30.7",
+    "builtin-modules": "^3.3.0",
+    "esbuild": "0.14.49",
+    "eslint": "8.20.0",
+    "eslint-config-prettier": "8.5.0",
+    "lint-staged": "^13.0.3",
+    "prettier": "2.7.1",
+    "simple-git-hooks": "^2.8.0",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  },
+  "dependencies": {
+    "obsidian": "^0.15.4"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx commitlint -e -V && npx lint-staged"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
