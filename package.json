@@ -44,7 +44,8 @@
     "obsidian": "^0.15.4"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx commitlint -e -V && npx lint-staged"
+    "pre-commit": "npx lint-staged",
+    "commit-msg": "npx commitlint -e -V"
   },
   "commitlint": {
     "extends": [
