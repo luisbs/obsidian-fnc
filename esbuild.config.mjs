@@ -1,14 +1,22 @@
 import esbuild from 'esbuild'
 import builtins from 'builtin-modules'
 
+//
+// is expected that the files
+// are going to be re-proccesed
+//
+
+/** @type {esbuild.BuildOptions[]} */
+const formats = [
+  { format: 'cjs', outfile: 'lib/obsidian-fnc.js', target: 'ES2018' },
+  { format: 'esm', outfile: 'lib/obsidian-fnc.mjs', target: 'ES2018' },
+]
+
 /** @type {esbuild.BuildOptions} */
-const BUILD_CONFIG = {
+const BASE_CONFIG = {
   entryPoints: ['src/index.ts'],
-  outfile: 'lib/index.js',
 
   bundle: true,
-  format: 'cjs',
-  target: 'es2016',
   treeShaking: true,
   sourcemap: 'external',
 
@@ -23,6 +31,9 @@ const BUILD_CONFIG = {
     ].join('\n'),
   },
   external: [
+    //
+    '@floating-ui/dom',
+    //
     'obsidian',
     'electron',
     '@codemirror/autocomplete',
@@ -52,7 +63,9 @@ const BUILD_CONFIG = {
 
 // compilation process
 try {
-  await esbuild.build(BUILD_CONFIG)
+  for (const format of formats) {
+    await esbuild.build({ ...BASE_CONFIG, ...format })
+  }
 } catch (error) {
   process.exit(1)
 }
