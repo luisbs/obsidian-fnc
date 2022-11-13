@@ -15,10 +15,7 @@ export default abstract class Suggester<T> implements ISuggestOwner<T> {
     protected containerEl: HTMLElement,
   ) {
     this.scope = new Scope()
-
-    this.wrapperEl = createDiv('suggestions')
-
-    this.registerListeners()
+    this.wrapperEl = createDiv('suggestions-tooltip')
   }
 
   protected registerListeners() {

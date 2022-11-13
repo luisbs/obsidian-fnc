@@ -13,3 +13,18 @@ export function matchWidth(): Middleware {
     },
   }
 }
+
+/**
+ * Modifies the floating element position
+ * to align with the reference element.
+ */
+export function makeItFloat(): Middleware {
+  return {
+    name: 'makeItFloat',
+    fn({ elements, x, y }) {
+      elements.floating.style.top = y + 'px'
+      elements.floating.style.left = x + 'px'
+      return {}
+    },
+  }
+}

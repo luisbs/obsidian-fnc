@@ -1,6 +1,6 @@
 import { computePosition } from '@floating-ui/dom'
 import { App } from 'obsidian'
-import { matchWidth } from 'src/common/ui'
+import { makeItFloat, matchWidth } from 'src/common/ui'
 import Suggester from './Suggester'
 
 /**
@@ -18,7 +18,7 @@ export default abstract class InputSuggester<T> extends Suggester<T> {
   #options: T[] = []
   #suggestionEls: HTMLElement[] = []
 
-  #focused = 0
+  #focused = -1
 
   constructor(
     app: App, //
@@ -26,25 +26,23 @@ export default abstract class InputSuggester<T> extends Suggester<T> {
     containerEl?: HTMLElement,
   ) {
     super(app, containerEl ?? inputEl.parentElement ?? document.body)
+    this.registerListeners()
   }
 
   open(): void {
     super.open()
-    this.#initializeFloatingElement()
+    // initializeFloatingElement
+    computePosition(this.inputEl, this.wrapperEl, {
+      placement: 'bottom-start',
+      middleware: [matchWidth(), makeItFloat()],
+    })
   }
 
   close(): void {
     super.close()
+    this.#focused = -1
     this.#options = []
     this.#suggestionEls = []
-    this.focusSuggestion(0, false)
-  }
-
-  #initializeFloatingElement() {
-    computePosition(this.inputEl, this.wrapperEl, {
-      placement: 'bottom-start',
-      middleware: [matchWidth()],
-    })
   }
 
   protected registerListeners(): void {
@@ -71,7 +69,7 @@ export default abstract class InputSuggester<T> extends Suggester<T> {
 
   protected onInputChange(event: InputEvent | FocusEvent): void {
     if (
-      !(event.currentTarget instanceof HTMLInputElement) ||
+      !(event.currentTarget instanceof HTMLInputElement) &&
       !(event.currentTarget instanceof HTMLTextAreaElement)
     ) {
       return
