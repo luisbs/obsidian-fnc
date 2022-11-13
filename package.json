@@ -21,10 +21,11 @@
   ],
   "scripts": {
     "prepare": "npx simple-git-hooks",
-    "build": "run-s lint build:prepare build:code build:types",
+    "build": "run-s lint build:prepare build:types build:package",
     "build:prepare": "rimraf lib types",
-    "build:code": "node esbuild.config.mjs",
+    "build:package": "node esbuild.config.mjs --environment production",
     "build:types": "tsc -emitDeclarationOnly -skipLibCheck",
+    "watch": "node esbuild.config.mjs",
     "lint": "run-s lint:ts lint:eslint lint:prettier",
     "lint:ts": "tsc -noEmit -skipLibCheck",
     "lint:prettier": "prettier --check \"./src/**/*.(js|ts)\"",
@@ -52,7 +53,7 @@
   },
   "dependencies": {
     "@floating-ui/dom": "^1.0.2",
-    "obsidian": "^0.15.4"
+    "obsidian": "^0.16"
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged",
