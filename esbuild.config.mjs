@@ -57,6 +57,7 @@ const DEV_CONFIG = {
 /** @type {esbuild.BuildOptions} */
 const PROD_CONFIG = {
   ...BASE_CONFIG,
+  watch: false,
   sourcemap: false,
   logLevel: 'error',
   banner: {
@@ -70,16 +71,12 @@ const PROD_CONFIG = {
 }
 
 // compilation process
-try {
-  if (process.env.PROD) {
-    for (const format of formats) {
-      await esbuild.build({ ...PROD_CONFIG, ...format })
-    }
-  } else {
-    for (const format of formats) {
-      await esbuild.build({ ...DEV_CONFIG, ...format })
-    }
+if ((process.env.npm_lifecycle_script || '').includes('production')) {
+  for (const format of formats) {
+    await esbuild.build({ ...PROD_CONFIG, ...format })
   }
-} catch (error) {
-  process.exit(1)
+} else {
+  for (const format of formats) {
+    await esbuild.build({ ...DEV_CONFIG, ...format })
+  }
 }
