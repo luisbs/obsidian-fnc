@@ -151,7 +151,7 @@ export class LoggingGroup extends Logger {
 
   constructor(namespace: string, ...data: unknown[]) {
     super(namespace)
-    this.info(...data)
+    if (data.length > 0) this.info(...data)
   }
 
   public log(timestamp: Date, namespace: string, level: LogLevelValue, data: unknown[]): void {
