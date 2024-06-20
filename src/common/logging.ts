@@ -1,15 +1,17 @@
-export type LogLevelValue = 0b00 | 0b01 | 0b10 | 0b11
+export type LogLevelValue = 0b000 | 0b001 | 0b010 | 0b011 | 0b100
 export const LogLevel = {
-  ERROR: 0b00 as LogLevelValue,
-  WARN: 0b01 as LogLevelValue,
-  INFO: 0b10 as LogLevelValue,
-  DEBUG: 0b11 as LogLevelValue,
+  ERROR: 0b000 as LogLevelValue,
+  WARN: 0b001 as LogLevelValue,
+  INFO: 0b010 as LogLevelValue,
+  DEBUG: 0b011 as LogLevelValue,
+  TRACE: 0b100 as LogLevelValue,
 }
 export const LogLevelReverse: Record<LogLevelValue, string> = {
-  [0b00]: 'ERROR',
-  [0b01]: 'WARN ',
-  [0b10]: 'INFO ',
-  [0b11]: 'DEBUG',
+  [0b000]: 'ERROR',
+  [0b001]: 'WARN ',
+  [0b010]: 'INFO ',
+  [0b011]: 'DEBUG',
+  [0b100]: 'TRACE',
 }
 
 export interface LogEntry {
@@ -24,6 +26,7 @@ export interface LoggerDriver {
   warn(prefix: string, data: unknown[]): void
   info(prefix: string, data: unknown[]): void
   debug(prefix: string, data: unknown[]): void
+  trace(prefix: string, data: unknown[]): void
 
   /** Starts a logs group, and returns a function to end the group. */
   group(prefix: string, data: unknown[]): () => void
@@ -37,10 +40,13 @@ export class ConsoleLoggerDriver implements LoggerDriver {
     console.warn(prefix, ...data)
   }
   public info(prefix: string, data: unknown[]): void {
-    console.log(prefix, ...data)
+    console.info(prefix, ...data)
   }
   public debug(prefix: string, data: unknown[]): void {
     console.debug(prefix, ...data)
+  }
+  public trace(prefix: string, data: unknown[]): void {
+    console.trace(prefix, ...data)
   }
 
   public group(prefix: string, data: unknown[]): () => void {
@@ -61,6 +67,9 @@ export class FileLoggerDriver implements LoggerDriver {
     throw new Error('FileLogger not implemented')
   }
   public debug(prefix: string, data: unknown[]): void {
+    throw new Error('FileLogger not implemented')
+  }
+  public trace(prefix: string, data: unknown[]): void {
     throw new Error('FileLogger not implemented')
   }
 
@@ -117,6 +126,9 @@ export class Logger {
   public debug(...data: unknown[]): void {
     this.log(new Date(), this.namespace, LogLevel.DEBUG, data)
   }
+  public trace(...data: unknown[]): void {
+    this.log(new Date(), this.namespace, LogLevel.TRACE, data)
+  }
 
   public on(logger: unknown): Logger {
     return logger && logger instanceof Logger ? new LoggerWrapper(this.namespace, logger) : this
@@ -143,6 +155,9 @@ export class LoggerWrapper extends Logger {
   }
   public debug(...data: unknown[]): void {
     this.logger.log(new Date(), this.namespace, LogLevel.DEBUG, data)
+  }
+  public trace(...data: unknown[]): void {
+    this.logger.log(new Date(), this.namespace, LogLevel.TRACE, data)
   }
 }
 
