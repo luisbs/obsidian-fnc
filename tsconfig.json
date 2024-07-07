@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "strict": true,
-    "target": "ESNext",
+    "target": "ES2021",
     "module": "ESNext",
     "allowJs": false,
     "removeComments": true,
@@ -24,7 +24,7 @@
     "isolatedModules": true,
     "importHelpers": true,
     "skipDefaultLibCheck": true,
-    "lib": ["DOM", "ES2018"]
+    "lib": ["DOM", "ES2021"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["lib/**/*.ts"]

@@ -140,7 +140,10 @@ export class Logger {
 }
 
 export class LoggerWrapper extends Logger {
-  constructor(namespace: string, private logger: Logger) {
+  constructor(
+    namespace: string,
+    private logger: Logger,
+  ) {
     super(namespace)
   }
 

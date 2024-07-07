@@ -1,3 +1,4 @@
-export * from './common/logging'
-export * from './common/filesystem'
+export * from './utility/uri'
+export * from './utility/logging'
+export * from './utility/filesystem'
 export * from './suggesters'
