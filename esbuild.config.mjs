@@ -9,8 +9,8 @@ import builtins from 'builtin-modules'
 
 /** @type {esbuild.BuildOptions[]} */
 const formats = [
-  { format: 'cjs', outfile: 'lib/obsidian-fnc.js', target: 'ES2018' },
-  { format: 'esm', outfile: 'lib/obsidian-fnc.mjs', target: 'ES2018' },
+  { format: 'cjs', outfile: 'lib/obsidian-fnc.js', target: 'ES2021' },
+  { format: 'esm', outfile: 'lib/obsidian-fnc.mjs', target: 'ES2021' },
 ]
 
 /** @type {esbuild.BuildOptions} */
@@ -49,7 +49,6 @@ const BASE_CONFIG = {
 /** @type {esbuild.BuildOptions} */
 const DEV_CONFIG = {
   ...BASE_CONFIG,
-  watch: true,
   sourcemap: 'inline',
   logLevel: 'info',
 }
@@ -57,7 +56,6 @@ const DEV_CONFIG = {
 /** @type {esbuild.BuildOptions} */
 const PROD_CONFIG = {
   ...BASE_CONFIG,
-  watch: false,
   sourcemap: false,
   logLevel: 'error',
   banner: {
@@ -77,6 +75,9 @@ if ((process.env.npm_lifecycle_script || '').includes('production')) {
   }
 } else {
   for (const format of formats) {
-    await esbuild.build({ ...DEV_CONFIG, ...format })
+    const context = await esbuild.context({ ...DEV_CONFIG, ...format })
+    await context.rebuild()
+    await context.watch()
+    context.dispose()
   }
 }
