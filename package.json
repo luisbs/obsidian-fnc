@@ -21,7 +21,8 @@
   ],
   "scripts": {
     "prepare": "npx simple-git-hooks",
-    "build": "run-s lint test build:prepare build:types build:package",
+    "build": "run-s build:prepare build:types build:package",
+    "build:test": "run-s lint test build",
     "build:prepare": "rimraf lib types",
     "build:package": "node esbuild.config.mjs --environment production",
     "build:types": "tsc -emitDeclarationOnly -skipLibCheck",
