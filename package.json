@@ -1,7 +1,7 @@
 {
   "private": true,
   "license": "MIT",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "name": "obsidian-fnc",
   "description": "Common obsidian utility functions",
   "keywords": [
@@ -12,7 +12,7 @@
     "name": "luisbs",
     "url": "https://github.com/luisbs"
   },
-  "main": "lib/index.js",
+  "main": "lib/obsidian-fnc.cjs",
   "module": "lib/obsidian-fnc.mjs",
   "types": "types/index.d.ts",
   "files": [

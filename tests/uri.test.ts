@@ -28,12 +28,12 @@ describe('Testing URI methods', () => {
   })
 
   test('getExt', () => {
-    expect(URI.getExt('https://example.net/file.jpg?a=b&c=d')).toBe('.jpg')
-    expect(URI.getExt('http://example.net/file.tar.gz')).toBe('.tar.gz')
-    expect(URI.getExt('http://example.net/file.jpg')).toBe('.jpg')
-    expect(URI.getExt('path/a.b/file.jpg')).toBe('.jpg')
-    expect(URI.getExt('path/file.jpg')).toBe('.jpg')
-    expect(URI.getExt('path/.log')).toBe('.log')
+    expect(URI.getExt('https://example.net/file.jpg?a=b&c=d')).toBe('jpg')
+    expect(URI.getExt('http://example.net/file.tar.gz')).toBe('tar.gz')
+    expect(URI.getExt('http://example.net/file.jpg')).toBe('jpg')
+    expect(URI.getExt('path/a.b/file.jpg')).toBe('jpg')
+    expect(URI.getExt('path/file.jpg')).toBe('jpg')
+    expect(URI.getExt('path/.log')).toBe('log')
 
     // exceptions
     expect(URI.getExt('https://example.net/file?a=b&c=d')).toBeUndefined()

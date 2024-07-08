@@ -15,7 +15,7 @@ export class URI {
 
   /** Should use `hasExt()` before */
   static getExt(uri: string): string | undefined {
-    return /(\.[^\\/?]*)(\?.*)?$/gi.exec(uri)?.at(1)
+    return /(?<=\.)([^\\/?]*)(\?.*)?$/gi.exec(uri)?.at(1)
   }
 
   static removeExt(uri: string): string {

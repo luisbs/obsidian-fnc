@@ -9,7 +9,7 @@ import builtins from 'builtin-modules'
 
 /** @type {esbuild.BuildOptions[]} */
 const formats = [
-  { format: 'cjs', outfile: 'lib/obsidian-fnc.js', target: 'ES2021' },
+  { format: 'cjs', outfile: 'lib/obsidian-fnc.cjs', target: 'ES2021' },
   { format: 'esm', outfile: 'lib/obsidian-fnc.mjs', target: 'ES2021' },
 ]
 
