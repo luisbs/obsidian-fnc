@@ -1,6 +1,6 @@
 import { computePosition } from '@floating-ui/dom'
 import { App } from 'obsidian'
-import { makeItFloat, matchWidth } from 'src/common/ui'
+import { makeItFloat, matchWidth } from '../common/ui'
 import Suggester from './Suggester'
 
 /**

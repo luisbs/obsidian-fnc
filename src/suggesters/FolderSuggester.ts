@@ -4,7 +4,7 @@
  */
 
 import { TFolder } from 'obsidian'
-import { getAllFoldersInVault } from 'src/utility/filesystem'
+import { getAllFoldersInVault } from '../utility/filesystem'
 import InputSuggester from './InputSuggester'
 
 /**
