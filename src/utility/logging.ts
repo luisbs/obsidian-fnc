@@ -109,8 +109,10 @@ export class Logger {
         return Logger.drivers.forEach((driver) => driver.warn(prefix, data))
       case LogLevel.INFO:
         return Logger.drivers.forEach((driver) => driver.info(prefix, data))
-      default:
+      case LogLevel.DEBUG:
         return Logger.drivers.forEach((driver) => driver.debug(prefix, data))
+      default:
+        return Logger.drivers.forEach((driver) => driver.trace(prefix, data))
     }
   }
 
@@ -161,6 +163,11 @@ export class LoggerWrapper extends Logger {
   }
   public trace(...data: unknown[]): void {
     this.logger.log(new Date(), this.namespace, LogLevel.TRACE, data)
+  }
+
+  public flush(...data: unknown[]): void {
+    if (this.logger instanceof LoggingGroup) this.logger.flush(...data)
+    else this.logger.log(new Date(), this.namespace, LogLevel.INFO, data)
   }
 }
 

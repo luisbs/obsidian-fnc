@@ -78,6 +78,6 @@ if ((process.env.npm_lifecycle_script || '').includes('production')) {
     const context = await esbuild.context({ ...DEV_CONFIG, ...format })
     await context.rebuild()
     await context.watch()
-    context.dispose()
+    // context.dispose()
   }
 }
