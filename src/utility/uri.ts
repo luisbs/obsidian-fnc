@@ -1,8 +1,12 @@
-import { join } from 'path'
+import { normalizePath } from 'obsidian'
 
 export class URI {
   static join(...paths: Array<string | undefined | null>) {
-    return join(...(paths.filter((v) => !!v) as string[]))
+    const joined = paths.reduce((path: string, value) => {
+      if (!value) return path
+      return path.replace(/[\\/]+$/gi, '') + '/' + value.replace(/^[\\/]+/gi, '')
+    }, '')
+    return normalizePath(joined)
   }
 
   static normalize(uri: string): string {
