@@ -1,6 +1,14 @@
 import { URI, URL } from '../src/utility/uri'
 
 describe('Testing URI methods', () => {
+  test('join', () => {
+    expect(URI.join('a', 'b/c', 'd\\e', 'file.jpg')).toBe('a/b/c/d\\e/file.jpg')
+    expect(URI.join('a/', '/b/', '\\c\\', 'file.jpg')).toBe('a/b/c/file.jpg')
+    expect(URI.join('~/a', 'file.jpg')).toBe('~/a/file.jpg')
+    expect(URI.join('./a', 'file.jpg')).toBe('./a/file.jpg')
+    expect(URI.join('/a', 'file.jpg')).toBe('/a/file.jpg')
+  })
+
   // prettier-ignore
   test('normalize', () => {
     expect(URI.normalize('https://example.net/file😀-¨*.jpg?a=b&c=d')).toBe('https://example.net/file_-_.jpg?a=b&c=d')
@@ -64,19 +72,36 @@ describe('Testing URI methods', () => {
     expect(URI.removeExt('')).toBe('')
   })
 
-  test('getName', () => {
-    expect(URI.getName('https://example.net/file.jpg?a=b&c=d')).toBe('file')
-    expect(URI.getName('https://example.net/file?a=b&c=d')).toBe('file')
-    expect(URI.getName('http://example.net/file.tar.gz')).toBe('file')
-    expect(URI.getName('http://example.net/file.jpg')).toBe('file')
-    expect(URI.getName('http://example.net/file')).toBe('file')
-    expect(URI.getName('path/file.jpg')).toBe('file')
-    expect(URI.getName('path/file')).toBe('file')
-    expect(URI.getName('/file')).toBe('file')
+  test('getBasename', () => {
+    expect(URI.getBasename('https://example.net/file.jpg?a=b&c=d')).toBe('file')
+    expect(URI.getBasename('https://example.net/file?a=b&c=d')).toBe('file')
+    expect(URI.getBasename('http://example.net/file.tar.gz')).toBe('file')
+    expect(URI.getBasename('http://example.net/file.jpg')).toBe('file')
+    expect(URI.getBasename('http://example.net/file')).toBe('file')
+    expect(URI.getBasename('path/file.jpg')).toBe('file')
+    expect(URI.getBasename('path/file')).toBe('file')
+    expect(URI.getBasename('/file')).toBe('file')
+    expect(URI.getBasename('path/?a=b&c=d')).toBe('')
+    expect(URI.getBasename('path/.log')).toBe('')
 
     // exceptions
-    expect(URI.getName('path/?a=b&c=d')).toBeUndefined()
-    expect(URI.getName('path/.log')).toBeUndefined()
+    expect(URI.getBasename('/')).toBeUndefined()
+    expect(URI.getBasename('')).toBeUndefined()
+  })
+
+  test('getName', () => {
+    expect(URI.getName('https://example.net/file.jpg?a=b&c=d')).toBe('file.jpg?a=b&c=d')
+    expect(URI.getName('https://example.net/file?a=b&c=d')).toBe('file?a=b&c=d')
+    expect(URI.getName('http://example.net/file.tar.gz')).toBe('file.tar.gz')
+    expect(URI.getName('http://example.net/file.jpg')).toBe('file.jpg')
+    expect(URI.getName('http://example.net/file')).toBe('file')
+    expect(URI.getName('path/file.jpg')).toBe('file.jpg')
+    expect(URI.getName('path/file')).toBe('file')
+    expect(URI.getName('/file')).toBe('file')
+    expect(URI.getName('path/?a=b&c=d')).toBe('?a=b&c=d')
+    expect(URI.getName('path/.log')).toBe('.log')
+
+    // exceptions
     expect(URI.getName('/')).toBeUndefined()
     expect(URI.getName('')).toBeUndefined()
   })

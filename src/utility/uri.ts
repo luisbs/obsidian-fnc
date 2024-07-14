@@ -1,12 +1,10 @@
-import { normalizePath } from 'obsidian'
-
 export class URI {
   static join(...paths: Array<string | undefined | null>) {
-    const joined = paths.reduce((path: string, value) => {
+    return paths.reduce((path: string, value) => {
       if (!value) return path
+      if (!path) return value
       return path.replace(/[\\/]+$/gi, '') + '/' + value.replace(/^[\\/]+/gi, '')
     }, '')
-    return normalizePath(joined)
   }
 
   static normalize(uri: string): string {
@@ -26,10 +24,13 @@ export class URI {
     return uri.replace(/(\.[^\\/]*)?(\?.*)?$/gi, '')
   }
 
+  static getBasename(uri: string): string | undefined {
+    const name = URI.getName(uri)
+    return name ? URI.removeExt(name) : undefined
+  }
+
   static getName(uri: string): string | undefined {
-    return URI.removeExt(uri)
-      .match(/[^\\/]+$/gi)
-      ?.at(0)
+    return uri.match(/[^\\/]+$/gi)?.at(0)
   }
 
   static getParent(uri: string): string {
