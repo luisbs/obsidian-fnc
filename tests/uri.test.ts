@@ -11,13 +11,13 @@ describe('Testing URI methods', () => {
 
   // prettier-ignore
   test('normalize', () => {
-    expect(URI.normalize('https://example.net/file😀-¨*.jpg?a=b&c=d')).toBe('https://example.net/file_-_.jpg?a=b&c=d')
+    expect(URI.normalize('https://example.net/file😀-¨*.jpg#section1?a=b&c=d')).toBe('https://example.net/file_-_.jpg#section1?a=b&c=d')
     expect(URI.normalize('path/a.b/file😀-¨*.jpg?a=b&c=d')).toBe('path/a.b/file_-_.jpg?a=b&c=d')
   })
 
   test('hasExt', () => {
     // truthy
-    expect(URI.hasExt('https://example.net/file.jpg?a=b&c=d')).toBeTruthy()
+    expect(URI.hasExt('https://example.net/file.jpg#section1?a=b&c=d')).toBeTruthy()
     expect(URI.hasExt('http://example.net/file.tar.gz')).toBeTruthy()
     expect(URI.hasExt('http://example.net/file.jpg')).toBeTruthy()
     expect(URI.hasExt('path/a.b/file.jpg')).toBeTruthy()
@@ -36,7 +36,7 @@ describe('Testing URI methods', () => {
   })
 
   test('getExt', () => {
-    expect(URI.getExt('https://example.net/file.jpg?a=b&c=d')).toBe('jpg')
+    expect(URI.getExt('https://example.net/file.jpg#section1?a=b&c=d')).toBe('jpg')
     expect(URI.getExt('http://example.net/file.tar.gz')).toBe('tar.gz')
     expect(URI.getExt('http://example.net/file.jpg')).toBe('jpg')
     expect(URI.getExt('path/a.b/file.jpg')).toBe('jpg')
@@ -56,7 +56,7 @@ describe('Testing URI methods', () => {
 
   // prettier-ignore
   test('removeExt', () => {
-    expect(URI.removeExt('https://example.net/file.jpg?a=b&c=d')).toBe('https://example.net/file')
+    expect(URI.removeExt('https://example.net/file.jpg#section1?a=b&c=d')).toBe('https://example.net/file')
     expect(URI.removeExt('https://example.net/file?a=b&c=d')).toBe('https://example.net/file')
     expect(URI.removeExt('http://example.net/file.tar.gz')).toBe('http://example.net/file')
     expect(URI.removeExt('http://example.net/file.jpg')).toBe('http://example.net/file')
@@ -73,7 +73,7 @@ describe('Testing URI methods', () => {
   })
 
   test('getBasename', () => {
-    expect(URI.getBasename('https://example.net/file.jpg?a=b&c=d')).toBe('file')
+    expect(URI.getBasename('https://example.net/file.jpg#section1?a=b&c=d')).toBe('file')
     expect(URI.getBasename('https://example.net/file?a=b&c=d')).toBe('file')
     expect(URI.getBasename('http://example.net/file.tar.gz')).toBe('file')
     expect(URI.getBasename('http://example.net/file.jpg')).toBe('file')
@@ -90,7 +90,8 @@ describe('Testing URI methods', () => {
   })
 
   test('getName', () => {
-    expect(URI.getName('https://example.net/file.jpg?a=b&c=d')).toBe('file.jpg?a=b&c=d')
+    // prettier-ignore
+    expect(URI.getName('https://example.net/file.jpg#section1?a=b&c=d')).toBe('file.jpg#section1?a=b&c=d')
     expect(URI.getName('https://example.net/file?a=b&c=d')).toBe('file?a=b&c=d')
     expect(URI.getName('http://example.net/file.tar.gz')).toBe('file.tar.gz')
     expect(URI.getName('http://example.net/file.jpg')).toBe('file.jpg')

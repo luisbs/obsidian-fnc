@@ -3,12 +3,17 @@ export class URI {
     return paths.reduce((path: string, value) => {
       if (!value) return path
       if (!path) return value
-      return path.replace(/[\\/]+$/gi, '') + '/' + value.replace(/^[\\/]+/gi, '')
+
+      return (
+        path.replace(/[\\/]+$/gi, '') + //
+        '/' +
+        value.replace(/^[\\/]+/gi, '')
+      )
     }, '')
   }
 
   static normalize(uri: string): string {
-    return uri.replaceAll(/[^\\\w-/?&=':,. ]+/gi, '_')
+    return uri.replaceAll(/[^\w-\\/#?&=':,. ]+/gi, '_')
   }
 
   static hasExt(uri: string): boolean {
@@ -17,11 +22,11 @@ export class URI {
 
   /** Should use `hasExt()` before */
   static getExt(uri: string): string | undefined {
-    return /(?<=\.)([^\\/?]*)(\?.*)?$/gi.exec(uri)?.at(1)
+    return /(?<=\.)([^\\/#?]*)([#?].*)?$/gi.exec(uri)?.at(1)
   }
 
   static removeExt(uri: string): string {
-    return uri.replace(/(\.[^\\/]*)?(\?.*)?$/gi, '')
+    return uri.replace(/(\.[^\\/]*)?([#?].*)?$/gi, '')
   }
 
   static getBasename(uri: string): string | undefined {
