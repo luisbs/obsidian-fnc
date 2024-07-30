@@ -44,11 +44,20 @@ export class URL {
   }
 
   /** Should use `isUrl()` before */
-  static getReferer(url: string): string | undefined {
-    return /^https?:\/\/([\w-]+\.)+[\w-]+\//gi.exec(url)?.at(0)
+  static getOrigin(url: string): string | undefined {
+    return /^https?:\/\/[^\\/]+/gi.exec(url)?.at(0)
   }
 
-  static removeParams(url: string): string {
-    return url.replace(/\?.*$/gi, '')
+  /** Should use `isUrl()` before */
+  static getBaseurl(url: string): string | undefined {
+    return /^https?:\/\/[^#?]*/gi.exec(url)?.at(0)
+  }
+
+  static getHash(url: string): string | undefined {
+    return /(?<=#)[^?]*/gi.exec(url)?.at(0)
+  }
+
+  static getparams(url: string): string | undefined {
+    return /(?<=\?).*/gi.exec(url)?.at(0)
   }
 }

@@ -128,7 +128,7 @@ describe('Testing URI methods', () => {
 describe('Testing URL methods', () => {
   test('isUrl', () => {
     // truthy
-    expect(URL.isUrl('https://example.net/file/path.jpg?a=b&c=d')).toBeTruthy()
+    expect(URL.isUrl('https://example.net/file/path.jpg#section1?a=b&c=d')).toBeTruthy()
     expect(URL.isUrl('https://example.net/file/path.jpg')).toBeTruthy()
     expect(URL.isUrl('https://example.net/file/path')).toBeTruthy()
 
@@ -138,22 +138,51 @@ describe('Testing URL methods', () => {
   })
 
   // prettier-ignore
-  test('getReferer', () => {
-    expect(URL.getReferer('https://sub.example.net/file/path.jpg?a=b&c=d')).toBe('https://sub.example.net/')
-    expect(URL.getReferer('http://sub.example.net/file/path.jpg')).toBe('http://sub.example.net/')
-    expect(URL.getReferer('http://example.net/file/path')).toBe('http://example.net/')
+  test('getOrigin', () => {
+    expect(URL.getOrigin('https://sub.example.net/file/path.jpg#section1?a=b&c=d')).toBe('https://sub.example.net')
+    expect(URL.getOrigin('http://sub.example.net/file/path.jpg')).toBe('http://sub.example.net')
+    expect(URL.getOrigin('http://example.net/file/path')).toBe('http://example.net')
 
     // exception
-    expect(URL.getReferer('file/path.jpg')).toBeUndefined()
-    expect(URL.getReferer('file/path')).toBeUndefined()
+    expect(URL.getOrigin('file/path.jpg#section1?a=b&c=d')).toBeUndefined()
+    expect(URL.getOrigin('file/path')).toBeUndefined()
   })
 
   // prettier-ignore
-  test('removeParams', () => {
-    expect(URL.removeParams('https://example.net/file/path.jpg?a=b&c=d')).toBe('https://example.net/file/path.jpg')
-    expect(URL.removeParams('http://example.net/file/path.jpg?a=b&c=d')).toBe('http://example.net/file/path.jpg')
-    expect(URL.removeParams('file/path.jpg?a=b&c=d')).toBe('file/path.jpg')
-    expect(URL.removeParams('file/path?a=b&c=d')).toBe('file/path')
-    expect(URL.removeParams('file/path')).toBe('file/path')
+  test('getBaseurl', () => {
+    expect(URL.getBaseurl('https://example.net/file/path.jpg#section1?a=b&c=d')).toBe('https://example.net/file/path.jpg')
+    expect(URL.getBaseurl('http://example.net/file/path.jpg?a=b&c=d')).toBe('http://example.net/file/path.jpg')
+    expect(URL.getBaseurl('http://example.net/file/path')).toBe('http://example.net/file/path')
+
+    // false-positive
+    expect(URL.getBaseurl('file/path.jpg#section1?a=b&c=d')).toBeUndefined()
+    expect(URL.getBaseurl('file/path')).toBeUndefined()
+  })
+
+  test('getHash', () => {
+    expect(URL.getHash('https://example.net/file/path.jpg#section1?a=b&c=d')).toBe('section1')
+    expect(URL.getHash('http://example.net/file/path#section1')).toBe('section1')
+    expect(URL.getHash('file/path.jpg#section1')).toBe('section1')
+    expect(URL.getHash('file/path#section1')).toBe('section1')
+
+    // exception
+    expect(URL.getHash('http://example.net/file/path?a=b&c=d')).toBeUndefined()
+    expect(URL.getHash('http://example.net/file/path')).toBeUndefined()
+    expect(URL.getHash('file/path.jpg?a=b&c=d')).toBeUndefined()
+    expect(URL.getHash('file/path')).toBeUndefined()
+  })
+
+  // prettier-ignore
+  test('getparams', () => {
+    expect(URL.getparams('https://example.net/file/path.jpg#section1?a=b&c=d')).toBe('a=b&c=d')
+    expect(URL.getparams('http://example.net/file/path?a=b&c=d')).toBe('a=b&c=d')
+    expect(URL.getparams('file/path.jpg?a=b&c=d')).toBe('a=b&c=d')
+    expect(URL.getparams('file/path?a=b&c=d')).toBe('a=b&c=d')
+
+    // exception
+    expect(URL.getparams('http://example.net/file/path.jpg#section1')).toBeUndefined()
+    expect(URL.getparams('http://example.net/file/path')).toBeUndefined()
+    expect(URL.getparams('file/path.jpg')).toBeUndefined()
+    expect(URL.getparams('file/path')).toBeUndefined()
   })
 })
