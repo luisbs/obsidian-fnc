@@ -1,0 +1,31 @@
+{
+    "include": ["src/**/*.ts"],
+    "exclude": ["lib/**/*.ts"],
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outFile": "./lib/types.d.ts",
+        "declaration": true,
+        "declarationMap": false,
+        "emitDeclarationOnly": true,
+
+        "strict": true,
+        "target": "ES2022",
+        "module": "ESNext",
+        "allowJs": false,
+        "removeComments": true,
+
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noUnusedLocals": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "downlevelIteration": true,
+        "esModuleInterop": true,
+
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "skipDefaultLibCheck": true,
+        "lib": ["DOM", "ES2021"],
+    }
+}
