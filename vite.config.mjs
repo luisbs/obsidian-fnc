@@ -10,7 +10,13 @@ export default defineConfig({
 
     plugins: [
         banner(
-            `/*! ${pkg.name}@${pkg.version} is released under the ${pkg.license} license, check ${pkg.repository.url} */`,
+            [
+                '/*!',
+                ' * Copyright (c) 2022-present luisbs',
+                ` * ${pkg.name}@${pkg.version} is released under the ${pkg.license} license`,
+                ` * @source ${pkg.repository.url}`,
+                ' */',
+            ].join('\n'),
         ),
     ],
 
