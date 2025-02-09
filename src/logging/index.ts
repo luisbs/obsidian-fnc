@@ -9,7 +9,13 @@ export interface LogEntry {
 }
 
 export type LogLevelValue = 1 | 2 | 3 | 4 | 5
-export const LogLevel = Object.freeze({ TRACE: 1, DEBUG: 2, INFO: 3, WARN: 4, ERROR: 5 })
+export const LogLevel = Object.freeze({
+    TRACE: 1,
+    DEBUG: 2,
+    INFO: 3,
+    WARN: 4,
+    ERROR: 5,
+})
 export const LogLevelReverse: Record<LogLevelValue, string> = Object.freeze({
     [1]: 'TRACE',
     [2]: 'DEBUG',
@@ -194,7 +200,9 @@ export class LoggingGroup extends Logger {
     flush(...content: unknown[]): void {
         // open logging groups
         const prefix = this.prefix(new Date(), LogLevel.INFO)
-        const closers = this.drivers.map((driver) => driver.group(prefix, content))
+        const closers = this.drivers.map((driver) =>
+            driver.group(prefix, content),
+        )
 
         // logs stored entries
         for (const { timestamp, level, content } of this.#logs) {

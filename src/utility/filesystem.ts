@@ -2,7 +2,10 @@ import { normalizePath, TAbstractFile, TFile, TFolder, Vault } from 'obsidian'
 
 type FileFilter<T extends TAbstractFile = TAbstractFile> = (item: T) => boolean
 
-export function getAllFilesInVault(vault: Vault, filter?: FileFilter<TFile>): TFile[] {
+export function getAllFilesInVault(
+    vault: Vault,
+    filter?: FileFilter<TFile>,
+): TFile[] {
     const _filter = filter
         ? (item: TAbstractFile) => item instanceof TFile && filter(item)
         : (item: TAbstractFile) => item instanceof TFile
@@ -10,7 +13,10 @@ export function getAllFilesInVault(vault: Vault, filter?: FileFilter<TFile>): TF
     return getAllAbstractFilesInVault(vault, _filter)
 }
 
-export function getAllFoldersInVault(vault: Vault, filter?: FileFilter<TFolder>): TFolder[] {
+export function getAllFoldersInVault(
+    vault: Vault,
+    filter?: FileFilter<TFolder>,
+): TFolder[] {
     const _filter = filter
         ? (item: TAbstractFile) => item instanceof TFolder && filter(item)
         : (item: TAbstractFile) => item instanceof TFolder

@@ -6,8 +6,6 @@ import pkg from './package.json'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    // resolve: { alias: { '@': resolve(__dirname, './src') } },
-
     plugins: [
         banner(
             [
@@ -25,12 +23,12 @@ export default defineConfig({
         outDir: 'lib',
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
-            formats: ['es', 'cjs'],
-            fileName: 'obsidian-fnc',
+            formats: ['es'],
+            fileName: 'obsidian-fnc.esm',
         },
         rollupOptions: {
-            treeshake: true,
             logLevel: 'info',
+            treeshake: true,
             external: [
                 'obsidian',
                 'electron',

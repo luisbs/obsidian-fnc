@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import * as URI from '../../src/utility/uri'
 
+// prettier-ignore
 describe('Testing URI methods', () => {
     test('join', () => {
         expect(URI.join('a', 'b/c', 'd\\e', 'file.jpg')).toBe('a/b/c/d\\e/file.jpg')
@@ -11,9 +12,9 @@ describe('Testing URI methods', () => {
     })
 
     test('normalize', () => {
-        // prettier-ignore
-        expect(URI.normalize('https://example.net/file😀-¨*.jpg#section1?a=b&c=d')).toBe('https://example.net/file_-_.jpg#section1?a=b&c=d')
         expect(URI.normalize('path/a.b/file😀-¨*.jpg?a=b&c=d')).toBe('path/a.b/file_-_.jpg?a=b&c=d')
+        expect(URI.normalize('https://example.net/file😀-¨*.jpg#section1?a=b&c=d')) //
+            .toBe('https://example.net/file_-_.jpg#section1?a=b&c=d')
     })
 
     test('hasExt', () => {
@@ -55,7 +56,6 @@ describe('Testing URI methods', () => {
         expect(URI.getExt('')).toBeUndefined()
     })
 
-    // prettier-ignore
     test('removeExt', () => {
         expect(URI.removeExt('https://example.net/file.jpg#section1?a=b&c=d')).toBe('https://example.net/file')
         expect(URI.removeExt('https://example.net/file?a=b&c=d')).toBe('https://example.net/file')
@@ -91,7 +91,6 @@ describe('Testing URI methods', () => {
     })
 
     test('getName', () => {
-        // prettier-ignore
         expect(URI.getName('https://example.net/file.jpg#section1?a=b&c=d')).toBe('file.jpg#section1?a=b&c=d')
         expect(URI.getName('https://example.net/file?a=b&c=d')).toBe('file?a=b&c=d')
         expect(URI.getName('http://example.net/file.tar.gz')).toBe('file.tar.gz')
@@ -108,7 +107,6 @@ describe('Testing URI methods', () => {
         expect(URI.getName('')).toBeUndefined()
     })
 
-    // prettier-ignore
     test('getParent', () => {
         expect(URI.getParent('https://example.net/file.jpg?a=b&c=d')).toBe('https://example.net')
         expect(URI.getParent('https://example.net/file?a=b&c=d')).toBe('https://example.net')

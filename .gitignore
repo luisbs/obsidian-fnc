@@ -1,4 +1,11 @@
-# Logs
+# Dependency directories
+node_modules/
+
+# Artifacts
+lib
+
+# Local artifacts
+.vscode
 logs
 *.log
 npm-debug.log*
@@ -7,15 +14,9 @@ yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
 
-# Dependency directories
-node_modules/
-
 # dotenv environment variable files
 .env
 .env.development.local
 .env.test.local
 .env.production.local
 .env.local
-
-# Artifacts
-lib

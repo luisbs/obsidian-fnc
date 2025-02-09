@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'vitest'
 import * as URL from '../../src/utility/url'
 
+// prettier-ignore
 describe('Testing URL methods', () => {
     test('isUrl', () => {
         // truthy
@@ -13,7 +14,6 @@ describe('Testing URL methods', () => {
         expect(URL.isUrl('file/path')).toBeFalsy()
     })
 
-    // prettier-ignore
     test('getOrigin', () => {
         expect(URL.getOrigin('https://sub.example.net/file/path.jpg#section1?a=b&c=d')).toBe('https://sub.example.net')
         expect(URL.getOrigin('http://sub.example.net/file/path.jpg')).toBe('http://sub.example.net')
@@ -24,7 +24,6 @@ describe('Testing URL methods', () => {
         expect(URL.getOrigin('file/path')).toBeUndefined()
     })
 
-    // prettier-ignore
     test('getBaseurl', () => {
         expect(URL.getBaseurl('https://example.net/file/path.jpg#section1?a=b&c=d')).toBe('https://example.net/file/path.jpg')
         expect(URL.getBaseurl('http://example.net/file/path.jpg?a=b&c=d')).toBe('http://example.net/file/path.jpg')
@@ -48,7 +47,6 @@ describe('Testing URL methods', () => {
         expect(URL.getHash('file/path')).toBeUndefined()
     })
 
-    // prettier-ignore
     test('getparams', () => {
         expect(URL.getparams('https://example.net/file/path.jpg#section1?a=b&c=d')).toBe('a=b&c=d')
         expect(URL.getparams('http://example.net/file/path?a=b&c=d')).toBe('a=b&c=d')

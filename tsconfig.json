@@ -3,14 +3,14 @@
     "exclude": ["lib/**/*.ts"],
     "compilerOptions": {
         "baseUrl": ".",
-        "outFile": "./lib/types.d.ts",
         "declaration": true,
         "declarationMap": false,
         "emitDeclarationOnly": true,
+        "outFile": "./lib/types.d.ts",
 
         "strict": true,
-        "target": "ES2022",
         "module": "ESNext",
+        "target": "ES2022",
         "allowJs": false,
         "removeComments": true,
 
@@ -18,14 +18,19 @@
         "noImplicitReturns": true,
         "noImplicitThis": true,
         "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noFallthroughCasesInSwitch": true,
+        "allowSyntheticDefaultImports": true,
         "strictFunctionTypes": true,
         "strictNullChecks": true,
-        "downlevelIteration": true,
-        "esModuleInterop": true,
 
-        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "downlevelIteration": true,
+
         "importHelpers": true,
         "skipDefaultLibCheck": true,
-        "lib": ["DOM", "ES2021"],
+        "moduleResolution": "node",
+        "lib": ["DOM", "ES2022"],
     }
 }

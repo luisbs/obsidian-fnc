@@ -27,7 +27,7 @@ export class ConsoleLogDriver implements LogDriver {
     }
 
     public group(prefix: string, content: unknown[]): () => void {
-        console.groupCollapsed(...content)
+        console.groupCollapsed(prefix, ...content)
         return console.groupEnd
     }
 }

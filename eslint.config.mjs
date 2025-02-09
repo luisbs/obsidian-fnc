@@ -22,7 +22,10 @@ export default ts.config(
             },
         },
         rules: {
-            '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
+            '@typescript-eslint/array-type': [
+                'error',
+                { default: 'array-simple' },
+            ],
             '@typescript-eslint/no-confusing-void-expression': [
                 'error',
                 { ignoreArrowShorthand: true },
@@ -37,4 +40,5 @@ export default ts.config(
         files: ['*.config.mjs', 'tests/**/*.ts'],
         extends: [ts.configs.disableTypeChecked],
     },
+    { ignores: ['lib/**'] },
 )

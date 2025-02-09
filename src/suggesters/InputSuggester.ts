@@ -50,15 +50,23 @@ export default abstract class InputSuggester<T> extends Suggester<T> {
 
         this.scope.register([], 'Enter', (ev) => this.onKeypress(ev, 'enter'))
         this.scope.register([], 'ArrowUp', (ev) => this.onKeypress(ev, 'up'))
-        this.scope.register([], 'ArrowDown', (ev) => this.onKeypress(ev, 'down'))
+        this.scope.register([], 'ArrowDown', (ev) =>
+            this.onKeypress(ev, 'down'),
+        )
 
         // stop bubbling out of the suggester
         this.wrapperEl.addEventListener('mousedown', () => false)
         this.wrapperEl.on('click', '.suggestion-item', this.onClick.bind(this))
 
         this.inputEl.addEventListener('blur', this.onBlur.bind(this))
-        this.inputEl.addEventListener('focus', this.onInputChange.bind(this) as EventListener)
-        this.inputEl.addEventListener('input', this.onInputChange.bind(this) as EventListener)
+        this.inputEl.addEventListener(
+            'focus',
+            this.onInputChange.bind(this) as EventListener,
+        )
+        this.inputEl.addEventListener(
+            'input',
+            this.onInputChange.bind(this) as EventListener,
+        )
     }
 
     protected onBlur(): void {
@@ -94,7 +102,10 @@ export default abstract class InputSuggester<T> extends Suggester<T> {
         this.close()
     }
 
-    protected onKeypress(event: KeyboardEvent, action: 'up' | 'down' | 'enter'): void {
+    protected onKeypress(
+        event: KeyboardEvent,
+        action: 'up' | 'down' | 'enter',
+    ): void {
         if (event.isComposing) return
         event.preventDefault()
 
