@@ -10,7 +10,7 @@ export default defineConfig({
         banner(
             [
                 '/*!',
-                ' * Copyright (c) 2022-present luisbs',
+                ` * Copyright (c) 2022-present ${pkg.author.name}`,
                 ` * ${pkg.name}@${pkg.version} is released under the ${pkg.license} license`,
                 ` * @source ${pkg.repository.url}`,
                 ' */',
@@ -25,7 +25,7 @@ export default defineConfig({
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
-            fileName: 'obsidian-fnc.esm',
+            fileName: () => 'obsidian-fnc.esm.js',
         },
         rollupOptions: {
             logLevel: 'info',
