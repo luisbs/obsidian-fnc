@@ -41,7 +41,7 @@ export class Logger {
         return result.join('.')
     }
     get drivers(): readonly LogDriver[] {
-        return Object.freeze(this.drivers)
+        return Object.freeze(this.#drivers)
     }
 
     /** Change on level is propagated. */
