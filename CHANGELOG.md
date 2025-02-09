@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.3.5
+
+### Patch Changes
+
+- da575a3: Fixed driver getter on Logging
+
 ## 1.3.4
 
 ### Patch Changes
