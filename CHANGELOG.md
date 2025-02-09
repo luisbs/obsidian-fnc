@@ -1,5 +1,14 @@
 # @luis.bs/obsidian-fnc
 
+## 1.3.4
+
+### Patch Changes
+
+- 370d350: Change on artifacts build
+- bf7efd7: Change copyright notice to use package authors name
+- e04cbad: Change on URI utility functions
+- 927228d: Changes on development environment
+
 ## 1.3.3
 
 ### Patch Changes
