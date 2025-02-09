@@ -37,7 +37,10 @@ export class Logger {
     }
     get namespace(): string {
         const result: string[] = []
-        this.#namespaces.forEach((namespace) => result.push(namespace[0]))
+        for (let i = 0; i < this.#namespaces.length - 1; i++) {
+            result.push(this.#namespaces[i][0])
+        }
+        result.push(this.#namespaces.at(-1) ?? '')
         return result.join('.')
     }
     get drivers(): readonly LogDriver[] {
@@ -94,7 +97,7 @@ export class Logger {
             ':' + String(timestamp.getMinutes()).padStart(2, '0') +
             ':' + String(timestamp.getSeconds()).padStart(2, '0') +
             '.' + String(timestamp.getMilliseconds()).padStart(3, '0') +
-            '] ' + LogLevelReverse[level] + ' ' + '(' + this.namespace + '): '
+            '] ' + LogLevelReverse[level] + ' ' + '(' + this.namespace + '):'
         )
     }
 
