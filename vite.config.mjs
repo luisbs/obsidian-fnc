@@ -21,6 +21,7 @@ export default defineConfig({
     build: {
         target: 'es2022',
         outDir: 'lib',
+        sourcemap: true,
         lib: {
             entry: resolve(__dirname, 'src/index.ts'),
             formats: ['es'],

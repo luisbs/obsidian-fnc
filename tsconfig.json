@@ -6,7 +6,7 @@
         "declaration": true,
         "declarationMap": false,
         "emitDeclarationOnly": true,
-        "outFile": "./lib/types.d.ts",
+        "outDir": "./lib",
 
         "strict": true,
         "module": "ESNext",

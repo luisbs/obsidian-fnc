@@ -22,11 +22,11 @@
         "lib/**/*"
     ],
     "type": "module",
-    "types": "./lib/types.d.ts",
+    "types": "./lib/index.d.ts",
     "module": "./lib/obsidian-fnc.esm.js",
     "exports": {
         ".": {
-            "types": "./lib/types.d.ts",
+            "types": "./lib/index.d.ts",
             "import": "./lib/obsidian-fnc.esm.js"
         }
     },
