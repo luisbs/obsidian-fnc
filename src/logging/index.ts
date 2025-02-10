@@ -19,8 +19,8 @@ export const LogLevel = Object.freeze({
 export const LogLevelReverse: Record<LogLevelValue, string> = Object.freeze({
     [1]: 'TRACE',
     [2]: 'DEBUG',
-    [3]: 'INFO ',
-    [4]: 'WARN ',
+    [3]: ' INFO',
+    [4]: ' WARN',
     [5]: 'ERROR',
 })
 
