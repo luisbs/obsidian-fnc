@@ -1,5 +1,15 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.0
+
+### Minor Changes
+
+- 65d9181: Add support for changing the logging prefix
+
+### Patch Changes
+
+- 3436c4f: Changed LoggingGroup initialization
+
 ## 1.3.6
 
 ### Patch Changes
