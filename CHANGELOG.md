@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.1
+
+### Patch Changes
+
+- cb0cf3d: Avoid logging groups where logs list is empty
+
 ## 1.4.0
 
 ### Minor Changes
