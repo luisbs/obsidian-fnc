@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.3.6
+
+### Patch Changes
+
+- cf10a67: Fix on Logger namespaces
+
 ## 1.3.5
 
 ### Patch Changes
