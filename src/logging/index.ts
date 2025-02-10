@@ -215,6 +215,13 @@ export class LoggingGroup extends Logger {
     }
 
     flush(...content: unknown[]): void {
+        // if nothing has been appended or were ommited by the LogLevel
+        // log a single INFO message, which on itself can be ommited
+        if (this.#logs.length === 0) {
+            super.log(new Date(), LogLevel.INFO, content)
+            return
+        }
+
         // open logging groups
         const prefix = this.prefix(new Date(), LogLevel.INFO)
         const closers = this.drivers.map((driver) =>
