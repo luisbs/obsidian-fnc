@@ -12,7 +12,7 @@
         "module": "ESNext",
         "target": "ES2022",
         "allowJs": false,
-        "removeComments": true,
+        "removeComments": false,
 
         "noImplicitAny": true,
         "noImplicitReturns": true,
