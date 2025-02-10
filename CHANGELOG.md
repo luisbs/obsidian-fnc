@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.2
+
+### Patch Changes
+
+- a746bd3: Fixed empty logging group creation
+
 ## 1.4.1
 
 ### Patch Changes
