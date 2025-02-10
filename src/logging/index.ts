@@ -27,6 +27,7 @@ export const LogLevelReverse: Record<LogLevelValue, string> = Object.freeze({
 export class Logger {
     #parent?: Logger
     #level?: LogLevelValue
+    #format?: string
     #drivers: LogDriver[] = []
     #namespaces: string[] = []
 
@@ -34,6 +35,10 @@ export class Logger {
     get level(): LogLevelValue {
         if (this.#level) return this.#level
         return this.#parent?.level ?? LogLevel.WARN
+    }
+    get format(): string {
+        if (this.#format) return this.format
+        return this.#parent?.format ?? '[hh:mm:ss.ms] level (namespace):'
     }
     get namespace(): string {
         const result: string[] = []
@@ -50,6 +55,21 @@ export class Logger {
     /** Change on level is propagated. */
     setLevel(level: LogLevelValue): this {
         this.#level = level
+        return this
+    }
+    /**
+     * Change on format is propageted.
+     * The valid placeholders are:
+     * - `hh` (hour)
+     * - `mm` (minute)
+     * - `ss` (second)
+     * - `ms` (millisecond)
+     * - `level`
+     * - `namespace`
+     * @example '[hh:mm:ss.ms] level (namespace):'
+     */
+    setFormat(format: string): this {
+        this.#format = format
         return this
     }
     /** Change on drivers is not propagated after construction. */
@@ -88,17 +108,15 @@ export class Logger {
         return logger
     }
 
-    /** Prepare the log prefix as `[13:14:15.012] ERROR (a.b.c.namespace): ` */
+    /** Prepare the log prefix based on `this.format` */
     protected prefix(timestamp: Date, level: LogLevelValue): string {
-        // prettier-ignore
-        return (
-            // `[${hh}:${mm}:${ss}.${ms}] ${level} (${namespace}): `
-            '[' + String(timestamp.getHours()).padStart(2, '0') +
-            ':' + String(timestamp.getMinutes()).padStart(2, '0') +
-            ':' + String(timestamp.getSeconds()).padStart(2, '0') +
-            '.' + String(timestamp.getMilliseconds()).padStart(3, '0') +
-            '] ' + LogLevelReverse[level] + ' ' + '(' + this.namespace + '):'
-        )
+        return this.format
+            .replace('hh', String(timestamp.getHours()).padStart(2, '0'))
+            .replace('mm', String(timestamp.getMinutes()).padStart(2, '0'))
+            .replace('ss', String(timestamp.getSeconds()).padStart(2, '0'))
+            .replace('ms', String(timestamp.getMilliseconds()).padStart(3, '0'))
+            .replace('level', LogLevelReverse[level])
+            .replace('namespace', this.namespace)
     }
 
     log(timestamp: Date, level: LogLevelValue, content: unknown[]): void {
