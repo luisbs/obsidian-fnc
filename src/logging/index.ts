@@ -169,7 +169,7 @@ export class Logger {
         logger.addDrivers(this.#drivers)
         logger.addNamespaces(this.#namespaces)
 
-        logger.log(new Date(), LogLevel.INFO, content)
+        if (content.length) logger.log(new Date(), LogLevel.INFO, content)
         return logger
     }
 }
