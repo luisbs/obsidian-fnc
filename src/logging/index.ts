@@ -37,7 +37,7 @@ export class Logger {
         return this.#parent?.level ?? LogLevel.WARN
     }
     get format(): string {
-        if (this.#format) return this.format
+        if (this.#format) return this.#format
         return this.#parent?.format ?? '[hh:mm:ss.ms] level (namespace):'
     }
     get namespace(): string {
