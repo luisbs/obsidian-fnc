@@ -164,11 +164,12 @@ export class Logger {
 
     // /** Spawns a Sub-Logger, that groups the logs. */
     group(...content: unknown[]): LoggingGroup {
-        const logger = new LoggingGroup(...content)
+        const logger = new LoggingGroup()
         logger.#parent = this
         logger.addDrivers(this.#drivers)
         logger.addNamespaces(this.#namespaces)
 
+        logger.log(new Date(), LogLevel.INFO, content)
         return logger
     }
 }
@@ -205,11 +206,6 @@ export class Logger {
 
 export class LoggingGroup extends Logger {
     #logs: LogEntry[] = []
-
-    constructor(...content: unknown[]) {
-        super()
-        if (content.length > 0) this.info(...content)
-    }
 
     log(timestamp: Date, level: LogLevelValue, content: unknown[]): void {
         // only log levels equal or higher
