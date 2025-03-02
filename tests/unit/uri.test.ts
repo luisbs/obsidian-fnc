@@ -65,7 +65,10 @@ describe('Testing URI methods', () => {
         expect(URI.getParent('path/.log')).toBe('path')
         expect(URI.getParent('/file')).toBe('')
         expect(URI.getParent('/')).toBe('')
-        expect(URI.getParent('')).toBe('')
+
+        expect(URI.getParent('file.jpg')).toBeUndefined()
+        expect(URI.getParent('file?a=b')).toBeUndefined()
+        expect(URI.getParent('')).toBeUndefined()
     })
 
     test('hasExt', () => {

@@ -26,7 +26,9 @@ export class URI {
         return name ? this.removeExt(name) : undefined
     }
 
-    static getParent(uri: string): string {
+    /** If no slashes are found `undefined` is returned. */
+    static getParent(uri: string): string | undefined {
+        if (!/[\\/]/gi.test(uri)) return undefined
         return uri.replace(/[\\/][^\\/]*$/gi, '')
     }
 
