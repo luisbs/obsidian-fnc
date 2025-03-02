@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.3
+
+### Patch Changes
+
+- 13f5abf: Fix `getParent` behavior when no slashes are found
+
 ## 1.4.2
 
 ### Patch Changes
