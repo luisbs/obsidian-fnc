@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { URI } from '../../src/utility/uri'
+import { URI } from '../uri'
 
 // prettier-ignore
 describe('Testing URI methods', () => {

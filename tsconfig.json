@@ -1,6 +1,6 @@
 {
     "include": ["src/**/*.ts"],
-    "exclude": ["lib/**/*.ts"],
+    "exclude": ["**/__tests__/*.ts"],
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": "./src",

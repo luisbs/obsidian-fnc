@@ -37,7 +37,7 @@ export default ts.config(
         },
     },
     {
-        files: ['*.config.mjs', 'tests/**/*.ts'],
+        files: ['*.config.mjs', '**/__tests__/*.ts'],
         extends: [ts.configs.disableTypeChecked],
     },
     { ignores: ['lib/**'] },
