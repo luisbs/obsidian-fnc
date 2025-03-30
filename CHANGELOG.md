@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.4
+
+### Patch Changes
+
+- 2800ff6: Change compilation tool to generate multiple-files
+
 ## 1.4.3
 
 ### Patch Changes
