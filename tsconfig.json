@@ -3,10 +3,9 @@
     "exclude": ["lib/**/*.ts"],
     "compilerOptions": {
         "baseUrl": ".",
+        "rootDir": "./src",
+        "outDir": "./lib",
         "declaration": true,
-        "declarationMap": false,
-        "emitDeclarationOnly": true,
-        "declarationDir": "./lib",
 
         "strict": true,
         "module": "ESNext",
