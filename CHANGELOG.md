@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.5
+
+### Patch Changes
+
+- e3f7be1: Added exports to allow importing individual files
+
 ## 1.4.4
 
 ### Patch Changes
