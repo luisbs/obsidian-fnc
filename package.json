@@ -1,6 +1,6 @@
 {
     "license": "MIT",
-    "version": "1.4.4",
+    "version": "1.4.5",
     "name": "@luis.bs/obsidian-fnc",
     "description": "Common obsidian utility functions",
     "keywords": [
