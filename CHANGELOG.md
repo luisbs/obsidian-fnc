@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.6
+
+### Patch Changes
+
+- fec08e9: Fixed exports reference missing file
+
 ## 1.4.5
 
 ### Patch Changes
