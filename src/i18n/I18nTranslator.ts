@@ -31,7 +31,7 @@ export abstract class I18nTranslator<
     /**
      * The storage of translations is expected to be handled by you.
      */
-    abstract getTranslation(locale: string, key: K): string | Translation
+    abstract getTranslation(locale: L, key: K): string | Translation
 
     /**
      * Prepare a `DocumentationSegment` into the `DomElementInfo` for a link.
