@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.7
+
+### Patch Changes
+
+- 18a512e: Added i18n utility
+
 ## 1.4.6
 
 ### Patch Changes
