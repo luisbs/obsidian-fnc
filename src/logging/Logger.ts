@@ -174,36 +174,6 @@ export class Logger {
     }
 }
 
-// export class LoggerWrapper extends Logger {
-//     constructor(
-//         namespace: string,
-//         private logger: Logger,
-//     ) {
-//         super(namespace)
-//     }
-
-//     public error(...content: unknown[]): void {
-//         this.logger.log(new Date(), this.namespace, LogLevel.ERROR, content)
-//     }
-//     public warn(...content: unknown[]): void {
-//         this.logger.log(new Date(), this.namespace, LogLevel.WARN, content)
-//     }
-//     public info(...content: unknown[]): void {
-//         this.logger.log(new Date(), this.namespace, LogLevel.INFO, content)
-//     }
-//     public debug(...content: unknown[]): void {
-//         this.logger.log(new Date(), this.namespace, LogLevel.DEBUG, content)
-//     }
-//     public trace(...content: unknown[]): void {
-//         this.logger.log(new Date(), this.namespace, LogLevel.TRACE, content)
-//     }
-
-//     public flush(...content: unknown[]): void {
-//         if (this.logger instanceof LoggingGroup) this.logger.flush(...content)
-//         else this.logger.log(new Date(), this.namespace, LogLevel.INFO, content)
-//     }
-// }
-
 export class LoggingGroup extends Logger {
     #logs: LogEntry[] = []
 
