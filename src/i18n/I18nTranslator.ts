@@ -1,13 +1,19 @@
 export type HTMLSegment = [keyof HTMLElementTagNameMap, DomElementInfo?]
 export type DocumentationSegment = ['docs', string, string?]
-export type Translation = Array<string | HTMLSegment | DocumentationSegment>
+export type TranslationSet = Array<string | HTMLSegment | DocumentationSegment>
+export type Translation = string | TranslationSet
+
+export type Translated<T extends Translation> = T extends string
+    ? string
+    : DocumentFragment
 
 export interface RetrieveTranslation<
+    T extends Record<K, string | Translation>,
     K extends string = string,
     L extends string = string,
 > {
-    (key: K, params?: string[]): string | DocumentFragment
-    (locale: L, key: K, params?: string[]): string | DocumentFragment
+    (key: K, params?: string[]): Translated<T[K]>
+    (locale: L, key: K, params?: string[]): Translated<T[K]>
 }
 
 export interface AppendTranslation<
@@ -19,6 +25,7 @@ export interface AppendTranslation<
 }
 
 export abstract class I18nTranslator<
+    T extends Record<K, string | Translation>,
     K extends string = string,
     L extends string = string,
 > {
@@ -31,7 +38,7 @@ export abstract class I18nTranslator<
     /**
      * The storage of translations is expected to be handled by you.
      */
-    abstract getTranslation(locale: L, key: K): string | Translation
+    abstract getTranslation(locale: L, key: K): Translation
 
     /**
      * Prepare a `DocumentationSegment` into the `DomElementInfo` for a link.
@@ -72,17 +79,17 @@ export abstract class I18nTranslator<
      * Retrieves a translation to be used in a `new Setting().setName(translation)`.
      * Is defined as arrow function to allow easy destructuring.
      */
-    translate: RetrieveTranslation<K, L> = (
+    translate: RetrieveTranslation<T, K, L> = (
         localeKey: L | K,
         keyParams?: K | string[],
         paramsVoid?: string[],
     ) => {
         const [values, params] = this.sort(localeKey, keyParams, paramsVoid)
-        if (typeof values === 'string') return values
+        if (typeof values === 'string') return values as Translated<T[K]>
 
         const fragment = createFragment()
         this._appendTo(fragment, values, params)
-        return fragment
+        return fragment as Translated<T[K]>
     }
 
     /**
@@ -104,7 +111,7 @@ export abstract class I18nTranslator<
     /**
      * Internal method for appending translations into a `DocumentFragment`
      */
-    protected _appendTo(el: Node, values: Translation, params: string[]) {
+    protected _appendTo(el: Node, values: TranslationSet, params: string[]) {
         for (const item of values) {
             if (typeof item === 'string') {
                 el.appendText(item)
