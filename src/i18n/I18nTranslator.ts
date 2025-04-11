@@ -1,49 +1,50 @@
 export type HTMLSegment = [keyof HTMLElementTagNameMap, DomElementInfo?]
 export type DocumentationSegment = ['docs', string, string?]
-export type TranslationSet = Array<string | HTMLSegment | DocumentationSegment>
-export type Translation = string | TranslationSet
+export type I18nSegments = Array<string | HTMLSegment | DocumentationSegment>
 
-export type Translated<T extends Translation> = T extends string
-    ? string
-    : DocumentFragment
-
-export interface RetrieveTranslation<
-    T extends Record<K, string | Translation>,
-    K extends string = string,
-    L extends string = string,
-> {
-    (key: K, params?: string[]): Translated<T[K]>
-    (locale: L, key: K, params?: string[]): Translated<T[K]>
+export type I18nSources<K extends string> = Record<K, string | I18nSegments>
+export type I18nResults<K extends string> = Record<K, string | DocumentFragment>
+export type I18nPrepared<K extends string, S extends I18nSources<K>> = {
+    [A in keyof S]: S[A] extends string ? string : DocumentFragment
 }
 
-export interface AppendTranslation<
-    K extends string = string,
-    L extends string = string,
+export interface RetrieveTranslation<
+    L extends string,
+    K extends string,
+    R extends I18nResults<K>,
 > {
+    <k extends K>(key: k, params?: string[]): R[k]
+    <k extends K>(locale: L, key: k, params?: string[]): R[k]
+}
+
+export interface AppendTranslation<L extends string, K extends string> {
     (el: Node, key: K, params?: string[]): void
     (el: Node, locale: L, key: K, params?: string[]): void
 }
 
 export abstract class I18nTranslator<
-    T extends Record<K, string | Translation>,
-    K extends string = string,
-    L extends string = string,
+    L extends string,
+    K extends string,
+    S extends I18nSources<K> = I18nSources<K>,
+    R extends I18nResults<K> = I18nPrepared<K, S>,
 > {
     /**
      * A hook to allow checking your supported locales.
      * If `locale` is `undefined` the current locale should be returned.
      */
-    abstract filterLocale(locale?: string): L
+    protected abstract filterLocale(locale?: string): L
 
     /**
      * The storage of translations is expected to be handled by you.
      */
-    abstract getTranslation(locale: L, key: K): Translation
+    protected abstract getTranslation(locale: L, key: K): string | I18nSegments
 
     /**
      * Prepare a `DocumentationSegment` into the `DomElementInfo` for a link.
      */
-    abstract docElementInfo(segment: DocumentationSegment): DomElementInfo
+    protected abstract docElementInfo(
+        segment: DocumentationSegment,
+    ): DomElementInfo
 
     /**
      * Sorts params recived into a well defined set.
@@ -52,7 +53,7 @@ export abstract class I18nTranslator<
         localeOrKey: L | K,
         keyOrParamsOrVoid: K | string[] | undefined,
         paramsOrVoid: string[] | undefined,
-    ): [string | Translation, string[]] {
+    ): [string | I18nSegments, string[]] {
         if (keyOrParamsOrVoid == undefined) {
             return [
                 this.getTranslation(this.filterLocale(), localeOrKey as K),
@@ -79,24 +80,24 @@ export abstract class I18nTranslator<
      * Retrieves a translation to be used in a `new Setting().setName(translation)`.
      * Is defined as arrow function to allow easy destructuring.
      */
-    translate: RetrieveTranslation<T, K, L> = (
-        localeKey: L | K,
-        keyParams?: K | string[],
+    translate: RetrieveTranslation<L, K, R> = <k extends K>(
+        localeKey: L | k,
+        keyParams?: k | string[],
         paramsVoid?: string[],
     ) => {
         const [values, params] = this.sort(localeKey, keyParams, paramsVoid)
-        if (typeof values === 'string') return values as Translated<T[K]>
+        if (typeof values === 'string') return values as R[k]
 
         const fragment = createFragment()
         this._appendTo(fragment, values, params)
-        return fragment as Translated<T[K]>
+        return fragment as R[k]
     }
 
     /**
      * Appends a translation into a `HTMLElement` or a `DocumentFragment`.
      * Is defined as arrow function to allow easy destructuring.
      */
-    appendTo: AppendTranslation<K, L> = (
+    appendTo: AppendTranslation<L, K> = (
         el: Node,
         localeKey: L | K,
         keyParams?: K | string[],
@@ -111,7 +112,7 @@ export abstract class I18nTranslator<
     /**
      * Internal method for appending translations into a `DocumentFragment`
      */
-    protected _appendTo(el: Node, values: TranslationSet, params: string[]) {
+    protected _appendTo(el: Node, values: I18nSegments, params: string[]) {
         for (const item of values) {
             if (typeof item === 'string') {
                 el.appendText(item)
