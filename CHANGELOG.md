@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.8
+
+### Patch Changes
+
+- 349cb2d: Fixed I18nTranslator types - Keep string type when translated
+
 ## 1.4.7
 
 ### Patch Changes
