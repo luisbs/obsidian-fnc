@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.9
+
+### Patch Changes
+
+- 9be5c4e: Testing publishing
+
 ## 1.4.8
 
 ### Patch Changes
