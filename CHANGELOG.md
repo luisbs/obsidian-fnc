@@ -1,5 +1,11 @@
 # @luis.bs/obsidian-fnc
 
+## 1.4.9
+
+### Patch Changes
+
+- 0939212: Listed supported languages
+
 ## 1.4.8
 
 ### Patch Changes
