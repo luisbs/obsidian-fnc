@@ -1,3 +1,65 @@
+/**
+ * Extracted: 2025-04-17
+ * from: https://github.com/obsidianmd/obsidian-translations?tab=readme-ov-file#existing-languages
+ */
+export type ObsidianLanguages =
+    | 'en' //    ✅ English                  English (default)
+    | 'af' //    🚧 Afrikaans                Afrikaans
+    | 'am' //    ✅ Amharic                  አማርኛ
+    | 'ar' //    🚧 Arabic                   العربية
+    | 'eu' //    🚧 Basque                   Euskara
+    | 'be' //    ✅ Belarusian               беларуская мова
+    | 'bg' //    🚧 Bulgarian                български език
+    | 'bn' //    🚧 Bengali                  বাংলা
+    | 'ca' //    🚧 Catalan                  català
+    | 'cs' //    🚧 Czech                    čeština
+    | 'da' //    ✅ Danish                   Dansk
+    | 'de' //    ✅ German                   Deutsch
+    | 'dv' //    🚧 Dhivehi                  ދިވެހި
+    | 'el' //    🚧 Greek                    Ελληνικά
+    | 'en-GB' // ✅ English (GB)             English (GB)
+    | 'eo' //    🚧 Esperanto                Esperanto
+    | 'es' //    ✅ Spanish                  Español
+    | 'fa' //    🚧 Persian                  فارسی
+    | 'fi-fi' // 🚧 Finnish                  suomi
+    | 'fr' //    ✅ French                   français
+    | 'gl' //    🚧 Galician                 Galego
+    | 'he' //    🚧 Hebrew                   עברית 🇮🇱
+    | 'hi' //    🚧 Hindi                    हिन्दी
+    | 'hu' //    🚧 Hungarian                Magyar nyelv
+    | 'id' //    ✅ Indonesian               Bahasa Indonesia
+    | 'it' //    ✅ Italian                  Italiano
+    | 'ja' //    ✅ Japanese                 日本語
+    | 'ko' //    ✅ Korean                   한국어
+    | 'lv' //    ✅ Latvian                  Latviešu
+    | 'ml' //    🚧 Malayalam                മലയാളം
+    | 'ms' //    🚧 Malay                    Bahasa Melayu
+    | 'ne' //    ✅ Nepali                   नेपाली
+    | 'nl' //    ✅ Dutch                    Nederlands
+    | 'no' //    ✅ Norwegian                Norsk
+    | 'oc' //    🚧 Occitan                  Occitan
+    | 'pl' //    ✅ Polish                   język polski
+    | 'pt' //    ✅ Portuguese               Português
+    | 'pt-BR' // ✅ Brazilian Portuguese     Portugues do Brasil
+    | 'ro' //    🚧 Romanian                 Română
+    | 'ru' //    ✅ Russian                  Русский
+    | 'sa' //    🚧 Sanskrit                 संस्कृतम्
+    | 'sr' //    🚧 Serbian                  српски језик
+    | 'sv' //    🚧 Swedish                  Svenska
+    | 'sk' //    🚧 Slovak                   Slovenčina
+    | 'sq' //    ✅ Albanian                 Shqip
+    | 'ta' //    🚧 Tamil                    தமிழ்
+    | 'te' //    🚧 Telugu                   తెలుగు
+    | 'th' //    ✅ Thai                     ไทย
+    | 'tl' //    🚧 Filipino (Tagalog)       Tagalog
+    | 'tr' //    ✅ Turkish                  Türkçe
+    | 'uk' //    ✅ Ukrainian                Українська
+    | 'ur' //    🚧 Urdu                     اردو
+    | 'vi' //    ✅ Vietnamese               Tiếng Việt
+    | 'zh' //    ✅ Chinese (Simplified)     简体中文 (has a note)
+    | 'zh-TW' // ✅ Chinese (Traditional)    繁體中文
+
+//
 export type HTMLSegment = [keyof HTMLElementTagNameMap, DomElementInfo?]
 export type DocumentationSegment = ['docs', string, string?]
 export type I18nSegments = Array<string | HTMLSegment | DocumentationSegment>
@@ -23,11 +85,20 @@ export interface AppendTranslation<L extends string, K extends string> {
 }
 
 export abstract class I18nTranslator<
-    L extends string,
+    L extends ObsidianLanguages,
     K extends string,
     S extends I18nSources<K> = I18nSources<K>,
     R extends I18nResults<K> = I18nPrepared<K, S>,
 > {
+    /**
+     * Currently active language.
+     * @see https://forum.obsidian.md/t/a-way-to-get-obsidian-s-currently-set-language/17829/5
+     */
+    protected currentLocale(): ObsidianLanguages {
+        // prettier-ignore
+        return (window.localStorage.getItem('language') ?? 'en') as ObsidianLanguages
+    }
+
     /**
      * A hook to allow checking your supported locales.
      * If `locale` is `undefined` the current locale should be returned.
